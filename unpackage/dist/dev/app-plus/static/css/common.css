@@ -1,0 +1,17 @@
+.uni-flex-c {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.uni-flex-sbc{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.uni-flex-right{
+	display: flex;
+	align-items: center;
+	justify-content: right;
+}

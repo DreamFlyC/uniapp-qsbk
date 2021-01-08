@@ -1,0 +1,177 @@
+{
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
+				"app-plus": {
+					"bounce": "none", //关闭回弹
+					// "animationType": "fade-in",
+					// "animationDuration": 30000,
+					"titleNView": {
+						"backgroundColor": "#FFFFFF",
+						"searchInput": { //搜索框设置
+							"autoFocus": true, //自动获取光标
+							"align": "center",
+							"backgroundColor": "#F7F7F7",
+							"borderRadius": "10px",
+							"placeholder": "搜索糗事...",
+							"placeholderColor": "#ccc",
+							"disabled": true
+						},
+						"buttons": [{
+								// 左边
+								"color": "#FF9619",
+								"colorPressed": "#BBBBBB",
+
+								"fontSize": "22px",
+								"float": "left",
+								"fontSrc": "/static/iconfont/iconfont.ttf",
+								"text": "\ue609"
+							},
+							{
+								//右边按钮
+								"color": "#000000",
+								"colorPressed": "#BBBBBB",
+								"fontSize": "20px",
+								"backgroundColor": "#fff",
+								"float": "right",
+								"fontSrc": "/static/iconfont/iconfont.ttf",
+								"text": "\ue653"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/news/news",
+			"style": {
+				"navigationBarTitleText": "动态"
+			}
+		},
+		{
+			"path": "pages/paper/paper",
+			"style": {
+				"navigationBarTitleText": "小纸条"
+			}
+
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+
+		}, {
+			"path": "components/custom/no-data/no-data",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/search/search",
+			"style": {
+				"app-plus": {
+					"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
+					"bounce": "none", //关闭回弹
+					// "animationType": "fade-in",
+					// "animationDuration": 30000,
+					"titleNView": {
+						"backgroundColor": "#FFFFFF",
+						"autoBackButton": false, // "true" - 显示返回按钮； "false" - 不显示返回按钮。 默认值为"false"
+						"searchInput": { //搜索框设置
+							"autoFocus": true, //自动获取光标
+							"align": "left",
+							"backgroundColor": "#F7F7F7",
+							"borderRadius": "10px",
+							"placeholder": "搜索糗事...",
+							"placeholderColor": "#ccc",
+							"disabled": false
+						},
+						"buttons": [{
+							//右边按钮
+							"color": "#000000",
+							"colorPressed": "#BBBBBB",
+							"fontSize": "16px",
+							"backgroundColor": "#fff",
+							"float": "right",
+							"text": "取消",
+							"width": "auto",
+							"fontWeight":"bold"
+						}]
+					}
+				},
+				"h5":{
+					"titleNView": {
+						"backgroundColor": "#FFFFFF",
+						"autoBackButton": false, // "true" - 显示返回按钮； "false" - 不显示返回按钮。 默认值为"false"
+						"searchInput": { //搜索框设置
+							"autoFocus": true, //自动获取光标
+							"align": "left",
+							"backgroundColor": "#F7F7F7",
+							"borderRadius": "10px",
+							"placeholder": "搜索糗事...",
+							"placeholderColor": "#ccc",
+							"disabled": false
+						},
+						"buttons": [{
+							//右边按钮
+							"color": "#000000",
+							"colorPressed": "#BBBBBB",
+							"fontSize": "16px",
+							"backgroundColor": "#fff",
+							"float": "right",
+							"text": "取消",
+							"width": "auto"
+						}]
+					}
+				}
+			}
+
+
+		}
+	],
+	"globalStyle": {
+		"scrollIndicator": "none", // 不显示滚动条
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "糗事百科",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"enablePullDownRefresh": false, // 下拉刷新
+		"app-plus": {
+			"scrollIndicator": "none" //全局 在APP页面都不显示滚动条
+		}
+	},
+
+	"tabBar": {
+		"color": "#000000",
+		"backgroundColor": "#FFFFFF",
+		"selectedColor": "#FEE42B",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "糗事",
+				"iconPath": "static/tabar/index.png",
+				"selectedIconPath": "static/tabar/index1.png"
+			},
+			{
+				"pagePath": "pages/news/news",
+				"text": "动态",
+				"iconPath": "static/tabar/dynamic.png",
+				"selectedIconPath": "static/tabar/dynamic1.png"
+			},
+			{
+				"pagePath": "pages/paper/paper",
+				"text": "小纸条",
+				"iconPath": "static/tabar/paper.png",
+				"selectedIconPath": "static/tabar/paper1.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "static/tabar/mine.png",
+				"selectedIconPath": "static/tabar/mine1.png"
+			}
+		]
+	}
+}
