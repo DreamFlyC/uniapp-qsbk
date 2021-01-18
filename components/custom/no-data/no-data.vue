@@ -1,30 +1,27 @@
 <template>
-	<view>
-		<view class="nothing">
-			<image src="../../../static/img/nothing.jpg"></image>
-			<view :style="textStyle">{{text}}</view>
-		</view>
+	<view class="nothing">
+		<image src="/static/img/nothing.jpg"></image> <view :style="textStyle">{{ text }}</view>
 	</view>
 </template>
 
 <script>
 export default {
-	props:{
-		img:{
-			type:String,
-			default:''
+	props: {
+		img: {
+			type: String,
+			default: ''
 		},
-		text:{
-			type:String,
-			default:'没有搜索到相关内容~'
+		text: {
+			type: String,
+			default: '没有搜索到相关内容~'
 		},
-		textStyle:{
-			type:Object,
+		textStyle: {
+			type: Object,
 			default() {
 				return {
-					'marginTop':'20px',
-					'color':'#969696',
-					'fontWeight':'400'
+					marginTop: '20px',
+					color: '#969696',
+					fontWeight: '400'
 				};
 			}
 		}
@@ -39,14 +36,13 @@ export default {
 <style lang="scss" scoped>
 .nothing {
 	display: flex;
-	height: 60vh;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;	
-	image{
+	flex-direction: column;
+	font-weight: 500;
+	image {
 		width: 300rpx;
 		height: 300rpx;
 	}
 }
-
 </style>

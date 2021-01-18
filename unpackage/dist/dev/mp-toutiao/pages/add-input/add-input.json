@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar",
+    "emoji-list": "/components/custom/emoji-list/emoji-list",
+    "qs-img-grid": "/components/custom/qs-img-grid/qs-img-grid"
+  }
+}

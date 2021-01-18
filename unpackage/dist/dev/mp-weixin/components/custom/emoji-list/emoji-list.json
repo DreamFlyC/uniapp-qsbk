@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "swiper-tab": "/components/custom/swiper-tab/swiper-tab",
+    "no-data": "/components/custom/no-data/no-data"
+  }
+}

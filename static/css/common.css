@@ -1,8 +1,52 @@
+page{
+	--color:#ffde33;
+	--bColor:#969696;
+	height: 100%;
+}
+
+view,scroll-view,cover-view{
+		box-sizing: border-box;
+	}
+
+.container{
+	padding: 0 20rpx;
+}
+
+.b{
+	border: 1px solid #f8f7f7;
+}
+
+.b-t{
+	border-top: 1px solid #f8f7f7;
+}
+
+.b-b{
+	border-bottom: 1px solid #f8f7f7;
+}
+
+.f-w-5{
+	font-weight: 500;
+}
+
+.m-top-10{
+	margin-top: 20rpx;
+}
+
+.m-top-15{
+	margin-top: 30rpx;
+}
+
 .uni-flex-c {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
+
+.uni-flex-ac{
+	display: flex;
+align-items: center;
+}
+
 
 .uni-flex-sbc{
 	display: flex;

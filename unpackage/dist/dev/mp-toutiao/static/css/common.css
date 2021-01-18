@@ -1,0 +1,45 @@
+page{
+	--color:#ffde33;
+}
+
+view,scroll-view,cover-view{
+		box-sizing: border-box;
+	}
+
+.container{
+	padding: 0 20rpx;
+}
+
+.b-b{
+	border-bottom: 1px solid #f8f7f7;
+}
+
+.f-w-5{
+	font-weight: 500;
+}
+
+.m-top-10{
+	margin-top: 20rpx;
+}
+
+.m-top-15{
+	margin-top: 30rpx;
+}
+
+.uni-flex-c {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.uni-flex-sbc{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.uni-flex-right{
+	display: flex;
+	align-items: center;
+	justify-content: right;
+}

@@ -34,8 +34,10 @@ export default {
 		}
 	},
 	mounted() {
+		// #ifdef H5
 		document.querySelector('.uni-page-head-hd').style.display = 'none';
 		document.querySelector('.uni-page-head-ft .uni-btn-icon').style.lineHeight = '18px';
+		// #endif
 	}
 };
 </script>

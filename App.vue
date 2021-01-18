@@ -1,4 +1,5 @@
 <script>
+	
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
@@ -16,7 +17,8 @@
 	/*每个页面公共css */
 	@import './static/uni.css';
 	/* 引入自定义图标库 */
-	@import './static/iconfont/icon.css';
+	/* @import './static/iconfont/icon.css'; */
+	@import './static/iconfont/iconfont.css';
 	/* 引入动画库 */
 @import './static/animate.css';
 

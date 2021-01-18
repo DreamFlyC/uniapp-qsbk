@@ -1,0 +1,45 @@
+.fxied.data-v-04767ce8 {
+  position: fixed;
+  z-index: 2;
+}
+.tabList.data-v-04767ce8 {
+  padding: 24rpx 0 24rpx 24rpx;
+  white-space: nowrap;
+  text-align: left;
+  position: relative;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.tabList .tabItem.data-v-04767ce8 {
+  width: 110rpx;
+  display: inline-block;
+}
+.tabList .tabItem text.data-v-04767ce8 {
+  position: relative;
+  line-height: 44rpx;
+  color: #969696;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  z-index: 999;
+}
+.tabList .tabItem.data-v-04767ce8:last-child {
+  margin-right: 24rpx;
+}
+.tabList .thisOpenSelect text.data-v-04767ce8 {
+  color: #333;
+  font-weight: 600;
+}
+.tabList .activeLine.data-v-04767ce8 {
+  width: 68rpx;
+  position: absolute;
+  top: 68rpx;
+  height: 8rpx;
+  border-radius: 12rpx;
+  background-color: var(--color);
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  z-index: 98;
+  margin-left: 24rpx;
+}
+

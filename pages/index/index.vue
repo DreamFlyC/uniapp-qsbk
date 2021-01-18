@@ -1,21 +1,26 @@
 <template>
-	<view>
-		<!-- 导航栏部分 -->
-		<swiper-tab :tabbars="tabbars" :tabIndex="tabIndex" :scrollFlag="true" :scrollInto="scrollInto" @handleTabTap="handleTabTap"></swiper-tab>
+	<view :style="topMenu ? 'margin-top:' + topMenu.height + 'px' : ''">
+		<!-- 导航栏组件 -->
+		<qs-nav-bar @clickLeft="handleClickLeft" @clickRight="handleClickRight">
+			<!-- 搜索框组件 -->
+			<qs-search :text="'搜索糗事~'" :type="1"> <qs-icon iconName="icon-bianji1" iconSize="50" iconColor="text-dark"></qs-icon> </qs-search>
+		</qs-nav-bar>
+		<!-- tab栏列表 -->
+		<swiper-tab :current="tabIndex" :items="tabbars" :scrollFlag="true"  :isEqually="false" @clickItem="handleTabTap"></swiper-tab>
+
 		<!-- 图文列表 -->
-		<view class="uni-tab-bar animate__animated animate__fadeInUp">
-			<swiper class="swiper-box" :style="{ height: swiperHeight + 'px' }" :current="tabIndex" @change="handleSwiperChange">
+		<view class="main-box animate__animated animate__fadeIn">
+			<swiper :style="{ height: swiperHeight + 'px' }" :current="tabIndex" @change="handleSwiperChange" @transition="handleSwiperTransition">
 				<swiper-item v-for="(items, index) in tabList" :key="index">
 					<scroll-view v-if="items.data.length" scroll-y class="list" @scrolltolower="handleLoadMore()" enable-back-to-top>
 						<!-- 图文列表 -->
-						<topic-box  v-for="(item, index1) in items.data" :key="index1" :item="item" :index="index1"></topic-box>
+						<topic-box v-for="(item, index1) in items.data" :key="index1" :item="item" :index="index1"></topic-box>
 						<!-- 上拉加载 -->
 						<uni-load-more :status="status" :content-text="contentText" v-if="items.data.length > 0" @clickLoadMore="handleLoadMore" />
 					</scroll-view>
-					
+
 					<!-- 没有数据 -->
-					<no-data v-else></no-data>
-					
+					<view v-else style="margin-top: 200rpx;"> <no-data></no-data> </view>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -23,42 +28,61 @@
 </template>
 
 <script>
-import topicBox from '../../components/custom/topic-box/topic-box.vue';
+import qsNavBar from '../../components/custom/qs-nav-bar/qs-nav-bar.vue';
+import qsSearch from '../../components/custom/qs-search/qs-search.vue';
+import topicBox from '../../components/custom/index/topic-box/topic-box.vue';
 import swiperTab from '../../components/custom/swiper-tab/swiper-tab.vue';
 import noData from '../../components/custom/no-data/no-data.vue';
-
 // 缓存每页最多
 const MAX_CACHE_DATA = 100;
 // 缓存页签数量
 const MAX_CACHE_PAGE = 3;
+
+// 原生导航栏按钮-签到  index为0
+const nav_button_qiandao = 0;
+// 原生导航栏按钮-发布  index为1
+const nav_button_fabu = 1;
 export default {
 	components: {
 		topicBox,
 		swiperTab,
-		noData
+		noData,
+		qsSearch,
+		qsNavBar
 	},
 	data() {
 		return {
+			// 标题栏下面横线
+			lineStyle: {
+				width: '70rpx'
+			},
+			// 手指滑动
+			startData: { clientX: '', clientY: '' },
+			platform: '', // 平台
+			topMenu: '', // 小程序顶部按钮
 			reload: false,
 			status: 'more', // 上拉加载 [more|loading|noMore] loading 的状态
 			contentText: {
-					contentdown: '上拉加载更多~',
-					contentrefresh: '加载中',
-					contentnomore: '我是有底线的~'
+				contentdown: '上拉加载更多~',
+				contentrefresh: '加载中',
+				contentnomore: '我是有底线的~'
 			},
-			swiperHeight: '500',
+			swiperHeight: 500,
+			screenWidth: 0,
 			scrollInto: '',
 			cacheTab: [],
 			/* 分类列表 */
 			tabIndex: 1,
-			categoryId: undefined,
+			id: undefined,
 			tabbars: [
-				{ categoryId: 1, categoryName: '关注', status: 1, sort: 1, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
-				{ categoryId: 2, categoryName: '推荐', status: 1, sort: 2, current: 1, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
-				{ categoryId: 3, categoryName: '体育', status: 1, sort: 3, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
-				{ categoryId: 4, categoryName: '热点', status: 1, sort: 4, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
-				{ categoryId: 5, categoryName: '财经', status: 1, sort: 5, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
-				{ categoryId: 6, categoryName: '娱乐', status: 1, sort: 6, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} }
+				{ id: 1, name: '关注', status: 1, sort: 1, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
+				{ id: 2, name: '推荐', status: 1, sort: 2, current: 1, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
+				{ id: 3, name: '体育', status: 1, sort: 3, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
+				{ id: 4, name: '热点', status: 1, sort: 4, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
+				{ id: 5, name: '财经', status: 1, sort: 5, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
+				{ id: 6, name: '娱乐', status: 1, sort: 6, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
+				{ id: 7, name: '视频', status: 1, sort: 7, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} },
+				{ id: 8, name: '国际', status: 1, sort: 7, current: 0, createTime: '2021-01-07T16:11:28.000+0800', updateTime: '2021-01-07T16:11:28.000+0800', params: {} }
 			],
 			// 查询参数
 			queryParams: {
@@ -68,13 +92,13 @@ export default {
 			/* 话题列表 */
 			tabList: [
 				{
-					categoryId: 1,
+					id: 1,
 					data: [
 						{
 							id: 1,
-							categoryId: 1,
+							id: 1,
 							userInfo: {
-								avatar: '../../static/demo/userpic/12.jpg',
+								avatar: '/static/demo/userpic/12.jpg',
 								nickname: '锅德刚',
 								desc: '沙雕糗友快乐源泉',
 								follow: false // 是否关注
@@ -82,7 +106,7 @@ export default {
 							title: '民政局的人都认识我了', // 标题
 							mediaInfo: {
 								type: 'img', // 媒体类型,img图片,video视频
-								titlePic: '../../static/demo/datapic/11.jpg', // 封面图
+								titlePic: '/static/demo/datapic/11.jpg', // 封面图
 								playNum: 20000, // 播放次数
 								countTime: '00:09' // 播放时长
 							},
@@ -96,7 +120,7 @@ export default {
 							comment: {
 								// 热门留言
 								userInfo: {
-									avatar: '../../static/demo/userpic/12.jpg',
+									avatar: '/static/demo/userpic/12.jpg',
 									nickname: '指着门口说滚'
 								},
 								dingNum: 1230,
@@ -106,13 +130,13 @@ export default {
 					]
 				},
 				{
-					categoryId: 2,
+					id: 2,
 					data: [
 						{
 							id: 2,
-							categoryId: 2,
+							id: 2,
 							userInfo: {
-								avatar: '../../static/demo/userpic/11.jpg',
+								avatar: '/static/demo/userpic/11.jpg',
 								nickname: 'CZP',
 								desc: '沙雕糗友快乐源泉',
 								follow: true // 是否关注
@@ -120,7 +144,7 @@ export default {
 							title: '民政局的人都认识我了', // 标题
 							mediaInfo: {
 								type: 'img', // 媒体类型,img图片,video视频
-								titlePic: '../../static/demo/datapic/12.jpg', // 封面图
+								titlePic: '/static/demo/datapic/12.jpg', // 封面图
 								playNum: 20000, // 播放次数
 								countTime: '00:09' // 播放时长
 							},
@@ -134,7 +158,7 @@ export default {
 							comment: {
 								// 热门留言
 								userInfo: {
-									avatar: '../../static/demo/userpic/12.jpg',
+									avatar: '/static/demo/userpic/12.jpg',
 									nickname: '指着门口说滚'
 								},
 								dingNum: 110,
@@ -144,13 +168,13 @@ export default {
 					]
 				},
 				{
-					categoryId: 3,
+					id: 3,
 					data: [
 						{
 							id: 3,
-							categoryId: 3,
+							id: 3,
 							userInfo: {
-								avatar: '../../static/demo/userpic/13.jpg',
+								avatar: '/static/demo/userpic/13.jpg',
 								nickname: 'CZP',
 								desc: '沙雕糗友快乐源泉',
 								follow: true // 是否关注
@@ -158,7 +182,7 @@ export default {
 							title: '民政局的人都认识我了', // 标题
 							mediaInfo: {
 								type: 'img', // 媒体类型,img图片,video视频
-								titlePic: '../../static/demo/datapic/13.jpg', // 封面图
+								titlePic: '/static/demo/datapic/13.jpg', // 封面图
 								playNum: 20000, // 播放次数
 								countTime: '00:09' // 播放时长
 							},
@@ -172,7 +196,7 @@ export default {
 							comment: {
 								// 热门留言
 								userInfo: {
-									avatar: '../../static/demo/userpic/12.jpg',
+									avatar: '/static/demo/userpic/12.jpg',
 									nickname: '指着门口说滚'
 								},
 								dingNum: 110,
@@ -182,15 +206,23 @@ export default {
 					]
 				},
 				{
-					categoryId: 4,
+					id: 4,
 					data: []
 				},
 				{
-					categoryId: 5,
+					id: 5,
 					data: []
 				},
 				{
-					categoryId: 6,
+					id: 6,
+					data: []
+				},
+				{
+					id: 7,
+					data: []
+				},
+				{
+					id: 8,
 					data: []
 				}
 			]
@@ -198,33 +230,115 @@ export default {
 	},
 	/* 生命周期函数 */
 	onLoad() {
-		// 这里的scroll-view设置占满整个屏幕，height设置100%；swiper的height设置成屏幕的高度（除去tab栏的高度）,需要微信提供的api获取设备屏幕高度数据
-		let res = uni.getSystemInfoSync();
-		this.swiperHeight = res.windowHeight - 50;
+		// #ifdef MP
+		//获取胶囊按钮的数据,微信小程序
+		this.topMenu = uni.getMenuButtonBoundingClientRect();
+		console.log('微信小程序平台');
+		// #endif
+
 		/* 获取话题分类 */
-		this.getTabbars();
+		// this.getTabbars();
 	},
-	
-	// 点击搜索框，跳转到搜索页
-	onNavigationBarSearchInputClicked() {
+	onReady() {
+		// 这里的scroll-view设置占满整个屏幕，height设置100%；swiper的height设置成屏幕的高度-减去tab栏的高度(49px)-原生导航栏的高度(44px),需要微信提供的api获取设备屏幕高度数据
+		let res = uni.getSystemInfoSync();
+		// #ifdef APP-PLUS
+		this.swiperHeight = res.windowHeight - 149;
+		// #endif
+
+		// #ifndef APP-PLUS
+		this.swiperHeight = res.windowHeight - 93;
+		// #endif
+
+		this.screenWidth = res.screenWidth;
+	},
+
+	// 点击搜索框，跳转到搜索页,IOS下有bug,会自动触发
+	/* onNavigationBarSearchInputClicked(e) {
 		uni.navigateTo({
 			url: '../search/search'
 		});
-	},
-	
+	}, */
+
 	// 监听原生导航栏按钮点击事件
-	onNavigationBarButtonTap(e){
-		
-	},
-	
+	/* onNavigationBarButtonTap(e) {
+		if (nav_button_qiandao === e.index) {
+			// 点击左边签到按钮
+		}
+		if (nav_button_fabu === e.index) {
+			// 点击右边发布按钮
+			uni.navigateTo({
+				url: '../add-input/add-input'
+			});
+		}
+	}, */
+
 	methods: {
-		/* 导航栏点击事件 */
+		/* 监听滑动事件 */
+		start(e) {
+			this.startData.clientX = e.changedTouches[0].clientX;
+			this.startData.clientY = e.changedTouches[0].clientY;
+		},
+		/* 监听滑动事件 */
+		end(e) {
+			const subX = e.changedTouches[0].clientX - this.startData.clientX;
+			const subY = e.changedTouches[0].clientY - this.startData.clientY;
+			if (subY > 50 || subY < -50) {
+				if (subY > 50) {
+					console.log('下滑');
+				} else if (subY < -50) {
+					console.log('上滑');
+				}
+			} else {
+				// 两个标题的距离为70rpx*2+60rpx=200rpx
+				let tabRange = 70*2+60;
+				if (subX > 10) {
+					console.log('右滑,', subX);
+				} else if (subX < -10) {
+					console.log('左滑,', Math.abs(subX));
+					let range = Math.abs(subX); // 手指左右滑动的绝对距离
+					console.log('屏幕宽度: ', this.screenWidth);
+					if (range >= this.screenWidth / 2) {
+						// 触发swipper的翻页效果
+						console.log('触发swipper的翻页效果');
+					} else {
+						// 计算公式  滑动的绝对距离/屏幕宽度 = 横线的宽度/标题栏的总距离
+						// range / this.screenWidth = this.lineStyle.width / tabRange;
+						
+						// this.lineStyle.width = (tabRange * range) / this.screenWidth + 'rpx'
+						console.log(this.lineStyle.width);
+					}
+					
+				} else {
+					console.log('无效,', subX);
+				}
+			}
+		},
+		
+		/* swiper-item 的位置发生改变时会触发 transition 事件 */
+		handleSwiperTransition(e){
+			console.log(e);
+		},
+
+		handleClickLeft() {
+			console.log('handleClickLeft,点击签到按钮');
+		},
+
+		handleClickRight() {
+			// 点击右边发布按钮
+			uni.navigateTo({
+					url: '../add-input/add-input'
+				
+			});
+		},
+
+		/* tab栏点击事件 */
 		handleTabTap(e) {
-			this.tabIndex = e.index;
+			this.tabIndex = e.currentIndex;
 		},
 		/* 页签切换事件 */
 		handleSwiperChange(e) {
-			let index = e.target.current || e.detail.current;
+			let index = e.detail.current;
 			this.switchTab(index);
 		},
 
@@ -264,13 +378,13 @@ export default {
 		/* 上拉加载 TODO;修改status文字没变 */
 		handleLoadMore(e) {
 			this.status = 'loading';
-			let categoryId = this.tabList[this.tabIndex].categoryId;
+			let id = this.tabList[this.tabIndex].id;
 			let data = [
 				{
 					id: 1,
-					categoryId: 1,
+					id: 1,
 					userInfo: {
-						avatar: '../../static/demo/userpic/12.jpg',
+						avatar: '/static/demo/userpic/12.jpg',
 						nickname: '锅德刚',
 						desc: '沙雕糗友快乐源泉',
 						follow: false // 是否关注
@@ -278,7 +392,7 @@ export default {
 					title: '民政局的人都认识我了', // 标题
 					mediaInfo: {
 						type: 'img', // 媒体类型,img图片,video视频
-						titlePic: '../../static/demo/datapic/11.jpg', // 封面图
+						titlePic: '/static/demo/datapic/11.jpg', // 封面图
 						playNum: 20000, // 播放次数
 						countTime: '00:09' // 播放时长
 					},
@@ -292,7 +406,7 @@ export default {
 					comment: {
 						// 热门留言
 						userInfo: {
-							avatar: '../../static/demo/userpic/12.jpg',
+							avatar: '/static/demo/userpic/12.jpg',
 							nickname: '指着门口说滚'
 						},
 						dingNum: 1230,
@@ -300,12 +414,12 @@ export default {
 					}
 				}
 			];
-			
+
 			setTimeout(() => {
 				/* 模拟数据 */
 				this.tabList[this.tabIndex].data.push(...data);
 				// this.getTopicList();
-			}, 2000);
+			}, 500);
 			this.status = 'more';
 		},
 
@@ -325,7 +439,7 @@ export default {
 		},
 
 		async getTopicList() {
-			this.queryParams.categoryId = this.tabList[this.tabIndex].categoryId;
+			this.queryParams.id = this.tabList[this.tabIndex].id;
 			const res = await this.$http.get('/topic/list', this.queryParams);
 		}
 	}
@@ -333,25 +447,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.main-box {
+	// box-sizing: border-box;
+	// border: 1px solid red;
+	// margin-top: 100rpx;
+}
+
 .swiper-tab-list {
-	color: #969696;
+	color: var(--bColor);
 	font-weight: bold;
-}
-.uni-tab-bar .active {
-	color: #343434;
-}
-
-.active .swiper-tab-line {
-	border-top: 5rpx solid #fede33;
-	border-bottom: 5rpx solid #fede33;
-	border-radius: 20rpx;
-	width: 70rpx;
-	margin: 0 auto;
-}
-
-/* 不显示下边框的线 */
-.uni-swiper-tab {
-	border-bottom: 0;
 }
 
 .list {

@@ -1,0 +1,12 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
+    "qs-icon": "/components/custom/qs-icon/qs-icon",
+    "topic-box": "/components/custom/index/topic-box/topic-box",
+    "swiper-tab": "/components/custom/swiper-tab/swiper-tab",
+    "no-data": "/components/custom/no-data/no-data",
+    "qs-search": "/components/custom/qs-search/qs-search",
+    "qs-nav-bar": "/components/custom/qs-nav-bar/qs-nav-bar"
+  }
+}

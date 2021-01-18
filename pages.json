@@ -1,12 +1,12 @@
 {
 	"pages": [{
 			"path": "pages/index/index",
-			"style": {
+			/* "style": {
 				"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
 				"app-plus": {
 					"bounce": "none", //关闭回弹
-					// "animationType": "fade-in",
-					// "animationDuration": 30000,
+					"animationType": "fade-in",
+					"animationDuration": 300,
 					"titleNView": {
 						"backgroundColor": "#FFFFFF",
 						"searchInput": { //搜索框设置
@@ -20,13 +20,13 @@
 						},
 						"buttons": [{
 								// 左边
-								"color": "#FF9619",
+								"color": "#FFDE33",
 								"colorPressed": "#BBBBBB",
 
 								"fontSize": "22px",
 								"float": "left",
 								"fontSrc": "/static/iconfont/iconfont.ttf",
-								"text": "\ue609"
+								"text": "\ue606"
 							},
 							{
 								//右边按钮
@@ -36,17 +36,22 @@
 								"backgroundColor": "#fff",
 								"float": "right",
 								"fontSrc": "/static/iconfont/iconfont.ttf",
-								"text": "\ue653"
+								"text": "\ue62d"
 							}
 						]
 					}
 				}
-			}
-		},
-		{
-			"path": "pages/news/news",
+			} */
 			"style": {
-				"navigationBarTitleText": "动态"
+				"navigationStyle":"custom",  // 导航栏样式，仅支持 default/custom。custom即取消默认的原生导航栏
+				"app-plus": {
+					"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
+					"bounce": "none", //关闭回弹
+					"titleNView": false, // 禁用原生导航,
+					"popGesture": "none", //iOS上是否支持屏幕左边滑动关闭当前页面。默认是可关闭。设为none则不响应左滑动画
+					"softinputNavBar": "none" //iOS软键盘上完成工具栏的显示模式，设置为 "none" 时关闭工具栏。
+
+				}
 			}
 		},
 		{
@@ -75,8 +80,6 @@
 				"app-plus": {
 					"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
 					"bounce": "none", //关闭回弹
-					// "animationType": "fade-in",
-					// "animationDuration": 30000,
 					"titleNView": {
 						"backgroundColor": "#FFFFFF",
 						"autoBackButton": false, // "true" - 显示返回按钮； "false" - 不显示返回按钮。 默认值为"false"
@@ -98,11 +101,11 @@
 							"float": "right",
 							"text": "取消",
 							"width": "auto",
-							"fontWeight":"bold"
+							"fontWeight": "bold"
 						}]
 					}
 				},
-				"h5":{
+				"h5": {
 					"titleNView": {
 						"backgroundColor": "#FFFFFF",
 						"autoBackButton": false, // "true" - 显示返回按钮； "false" - 不显示返回按钮。 默认值为"false"
@@ -128,8 +131,44 @@
 					}
 				}
 			}
+		}, {
+			"path": "pages/add-input/add-input",
+			"style": {
+				"app-plus": {
+					"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
+					"bounce": "none", //关闭回弹
+					"titleNView": false, // 禁用原生导航,
+					"popGesture": "none", //iOS上是否支持屏幕左边滑动关闭当前页面。默认是可关闭。设为none则不响应左滑动画
+					"softinputNavBar": "none" //iOS软键盘上完成工具栏的显示模式，设置为 "none" 时关闭工具栏。
+				}
 
+			}
+		}, {
+			"path": "components/custom/bao-she/bao-she",
+			"style": {
+				"app-plus": {
+					"titleNView": {
+						"titleText": "选择爆社",
+						"titleSize": "16px"
+					},
 
+					"animationType": "slide-in-bottom", // 新窗体从底部进入
+					"animationDuration": 300
+				}
+			}
+
+		}, {
+			"path": "pages/dynamic/dynamic",
+			"style": {
+				"app-plus": {
+					"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
+					"bounce": "none", //关闭回弹
+					"titleNView": false, // 禁用原生导航,
+					"popGesture": "none", //iOS上是否支持屏幕左边滑动关闭当前页面。默认是可关闭。设为none则不响应左滑动画
+					"softinputNavBar": "none" //iOS软键盘上完成工具栏的显示模式，设置为 "none" 时关闭工具栏。
+
+				}
+			}
 		}
 	],
 	"globalStyle": {
@@ -155,7 +194,7 @@
 				"selectedIconPath": "static/tabar/index1.png"
 			},
 			{
-				"pagePath": "pages/news/news",
+				"pagePath": "pages/dynamic/dynamic",
 				"text": "动态",
 				"iconPath": "static/tabar/dynamic.png",
 				"selectedIconPath": "static/tabar/dynamic1.png"

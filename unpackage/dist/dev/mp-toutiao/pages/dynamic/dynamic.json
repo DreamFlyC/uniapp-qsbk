@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
+    "swiper-tab": "/components/custom/swiper-tab/swiper-tab",
+    "qs-nav-bar": "/components/custom/qs-nav-bar/qs-nav-bar"
+  }
+}

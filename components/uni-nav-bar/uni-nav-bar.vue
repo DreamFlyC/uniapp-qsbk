@@ -21,7 +21,7 @@
 					<!-- 标题插槽 -->
 					<slot />
 				</view>
-				<view :class="title.length ? 'uni-navbar__header-btns-right' : ''" @tap="onClickRight" class="uni-navbar__header-btns uni-navbar__content_view">
+				<view @tap="onClickRight" class="uni-navbar__header-btns uni-navbar__header-btns-right uni-navbar__content_view">
 					<view class="uni-navbar__content_view" v-if="rightIcon.length">
 						<uni-icons :color="color" :type="rightIcon" size="24" />
 					</view>
@@ -181,7 +181,7 @@
 		display: flex;
 		/* #endif */
 		flex-wrap: nowrap;
-		width: 120rpx;
+		// width: 120rpx;
 		padding: 0 6px;
 		justify-content: center;
 		align-items: center;
@@ -191,7 +191,7 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		width: 150rpx;
+		// width: 150rpx;
 		justify-content: flex-start;
 	}
 
@@ -199,8 +199,7 @@
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		width: 150rpx;
-		padding-right: 30rpx;
+		// width: 150rpx;
 		justify-content: flex-end;
 	}
 

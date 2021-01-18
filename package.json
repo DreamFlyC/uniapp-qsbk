@@ -1,0 +1,23 @@
+{
+  "name": "uniapp-qsbk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DreamFlyC/uniapp-qsbk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DreamFlyC/uniapp-qsbk/issues"
+  },
+  "homepage": "https://github.com/DreamFlyC/uniapp-qsbk#readme",
+  "dependencies": {
+    "moment": "^2.29.1"
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "setting": {
+        "autoCompile": true,
+        "es6": true,
+        "minified": false,
+        "mockUpdate": false,
+        "newFeature": false,
+        "postcss": false,
+        "urlCheck": false
+    },
+    "appid": "ttef2b99967010ece9",
+    "projectname": "糗事百科"
+}

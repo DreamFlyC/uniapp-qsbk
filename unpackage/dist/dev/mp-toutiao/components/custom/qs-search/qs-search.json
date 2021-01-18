@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "qs-icon": "/components/custom/qs-icon/qs-icon"
+  },
+  "component": true
+}
