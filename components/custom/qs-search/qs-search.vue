@@ -9,16 +9,6 @@
 		</view>
 	</view>
 
-	<!-- <view class="uni-flex-c">
-			<view class="flex-1 search_wrap mr-2">
-				<view class="icon">
-					<qs-icon iconName="icon-sousuo" iconSize="28"></qs-icon>
-				</view>
-				<input class="text-center" id="input" disabled @tap="goToSearch" type="text" :placeholder="text" placeholder-style="font-size:26rpx;color:#ccc;text-align:center" />
-			</view>
-			<slot name="right"></slot>
-		</view>
-	</view> -->
 </template>
 
 <script>

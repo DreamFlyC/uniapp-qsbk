@@ -32,6 +32,10 @@ import moment from 'moment'; //导入模块
 moment.locale('zh-cn'); //设置语言 或 moment.lang('zh-cn'); 
 Vue.prototype.$moment = moment;//赋值使用
 
+/* 导航跳转 */
+import * as navTo from './common/js/navTo'
+Vue.prototype.$navTo = navTo
+
 /* 
 this.$moment('2019/06/17 14:00:00').startOf('hour').fromNow(); //1小时前
 this.$moment().format('YYYY年MM月DD日 HH时mm分ss秒');  //2019年08月01日 19时50分20秒

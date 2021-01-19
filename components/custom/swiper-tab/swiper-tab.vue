@@ -22,7 +22,7 @@
 					}}</text>
 					<!-- 底部横线 -->
 				</view>
-				<view class="activeLine" :style="tempLineStyle"></view>
+				<view class="downLine" :style="activeLineStyle" ></view>
 			</view>
 		</scroll-view>
 	</view>
@@ -54,14 +54,7 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		lineStyle: {
-			type: Object,
-			default() {
-				return {
-					width: '64rpx'
-				};
-			}
-		},
+		
 		itemSize: {
 			type: Number,
 			default: 30
@@ -85,7 +78,7 @@ export default {
 	},
 	data() {
 		return {
-			tempLineStyle: this.lineStyle,
+			activeLineStyle: {},
 			tempList: this.items,
 			currentIndex: 0,
 			windowWidth: 0, //设备宽度
@@ -110,7 +103,12 @@ export default {
 				success: res => {
 					this.windowWidth = res.windowWidth;
 					this.tempList.forEach((i, v) => {
+						
+						let tabLeft = 0;
 						let info = uni.createSelectorQuery().in(this);
+						
+						/* 获取tabList距离左边的位置 */
+						info.select('.tabList').boundingClientRect(res => {tabLeft = res.left;}).exec();
 						info
 							.select('#item' + v)
 							.boundingClientRect(res => {
@@ -119,18 +117,19 @@ export default {
 								// 	this.startLenght = res.left
 								// }
 								this.widthList.push(res.width);
-								this.leftList.push(res.left);
+								this.leftList.push(res.left - tabLeft);
 							})
 							.exec();
 					});
 				}
 			});
+			this.setActiveLineStyle();
 		});
+		
 	},
 	created() {
 		this.currentIndex = this.current;
-		// 当前索引*(标题的宽度 )
-		this.tempLineStyle.left = this.currentIndex * 110 + 'rpx';
+		
 		if (this.scrollFlag) {
 			setTimeout(() => {
 				this.tabListScroll(this.current);
@@ -139,10 +138,9 @@ export default {
 	},
 	watch: {
 		current(val) {
-			console.log(val);
 			if (val !== this.currentIndex) {
 				this.currentIndex = val;
-				this.tempLineStyle.left = this.currentIndex * 110 + 'rpx';
+				this.setActiveLineStyle();
 				if (this.scrollFlag) {
 					this.tabListScroll(val);
 				}
@@ -150,10 +148,26 @@ export default {
 		}
 	},
 	methods: {
+		/* 设置下边横线的位置 */
+		setActiveLineStyle() {
+			let left = this.leftList[this.currentIndex] +10;  // 最左边的padding-left要加10px
+			let width = this.widthList[this.currentIndex]-20; // 减去每个item的padding宽度
+			let lineLeft = left + 'px';
+			let lineWidth = width + 'px';
+			
+			this.activeLineStyle = {
+				left:lineLeft,
+				width:lineWidth
+			}
+			
+			/* console.log('this.currentIndex', this.currentIndex);
+			console.log('this.leftList', this.leftList);
+			console.log('this.widthList', this.widthList); */
+		},
 		_onClick(index) {
 			if (this.currentIndex !== index) {
 				this.currentIndex = index;
-				this.tempLineStyle.left = this.currentIndex * 110 + 'rpx';
+				this.setActiveLineStyle();
 				this.$emit('clickItem', { currentIndex: index });
 				// 开启滚动
 				if (this.scrollFlag) {
@@ -198,13 +212,13 @@ export default {
 	z-index: 2;
 }
 .tabList {
-	padding: 24rpx 0 24rpx 24rpx;
+	padding: 24rpx 0 ;
 	white-space: nowrap;
 	text-align: left;
 	position: relative;
 	align-items: center;
 	.tabItem {
-		width: 110rpx;
+		padding: 0 20rpx;
 		display: inline-block;
 		text {
 			// font-size: 30rpx;
@@ -228,9 +242,9 @@ export default {
 			// font-size: 32rpx;
 		}
 	}
+}
 
-	.activeLine {
-		width: 68rpx;
+.downLine {
 		position: absolute;
 		top: 68rpx;
 		height: 8rpx;
@@ -238,7 +252,7 @@ export default {
 		background-color: var(--color);
 		transition: all 0.3s ease 0s;
 		z-index: 98;
-		margin-left: 24rpx;
 	}
-}
+
+
 </style>

@@ -228,7 +228,7 @@ export default {
 		/* 点击爆社事件 */
 		handleBaoshe() {
 			uni.navigateTo({
-				url: '../../components/custom/bao-she/bao-she',
+				url: '@/components/custom/bao-she/bao-she',
 				animationType: 'slide-in-bottom', // 新窗体从底部进入
 				animationDuration: 300
 			});

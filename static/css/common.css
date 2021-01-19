@@ -1,6 +1,7 @@
 page{
 	--color:#ffde33;
 	--bColor:#969696;
+	--bgcolor:#f8f7f7;
 	height: 100%;
 }
 
@@ -8,8 +9,24 @@ view,scroll-view,cover-view{
 		box-sizing: border-box;
 	}
 
+.line-3{
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+.line-1{
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
 .container{
 	padding: 0 20rpx;
+	font-weight: 500;
 }
 
 .b{
@@ -44,9 +61,13 @@ view,scroll-view,cover-view{
 
 .uni-flex-ac{
 	display: flex;
-align-items: center;
+	align-items: center;
 }
 
+.uni-flex-jc{
+	display: flex;
+	justify-content: center;
+}
 
 .uni-flex-sbc{
 	display: flex;

@@ -20,8 +20,7 @@ export default {
 			default() {
 				return {
 					marginTop: '20px',
-					color: '#969696',
-					fontWeight: '400'
+					color: '#969696'
 				};
 			}
 		}
@@ -39,7 +38,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	font-weight: 500;
+	font-weight: bold;
 	image {
 		width: 300rpx;
 		height: 300rpx;

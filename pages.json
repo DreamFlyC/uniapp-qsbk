@@ -43,7 +43,7 @@
 				}
 			} */
 			"style": {
-				"navigationStyle":"custom",  // 导航栏样式，仅支持 default/custom。custom即取消默认的原生导航栏
+				"navigationStyle": "custom", // 导航栏样式，仅支持 default/custom。custom即取消默认的原生导航栏
 				"app-plus": {
 					"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
 					"bounce": "none", //关闭回弹
@@ -167,6 +167,22 @@
 					"popGesture": "none", //iOS上是否支持屏幕左边滑动关闭当前页面。默认是可关闭。设为none则不响应左滑动画
 					"softinputNavBar": "none" //iOS软键盘上完成工具栏的显示模式，设置为 "none" 时关闭工具栏。
 
+				}
+			}
+		}, {
+			"path": "pages/dynamic/huati/huati",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/dynamic/huati/category",
+			"style": {
+				"navigationBarTitleText": "话题分类",
+				"app-plus": {
+					"scrollIndicator": "none", // 滚动条显示策略，设置为 "none" 时不显示滚动条。
+					"bounce": "none" //关闭回弹
+			
 				}
 			}
 		}
